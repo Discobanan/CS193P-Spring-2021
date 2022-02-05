@@ -7,18 +7,47 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    var emojis = [ "💩", "🚗", "☠️", "🚯", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" ]
+enum Theme {
+    case vehicles
+    case animals
+    case fruits
     
-    @State var emojiCount = 20
+    var description: String {
+        switch self {
+            case .vehicles: return "Vehicles"
+            case .animals: return "Animals"
+            case .fruits: return "Fruits"
+        }
+    }
+}
+
+struct ContentView: View {
+    var themes: [Theme: [String]] = [
+        Theme.vehicles: ["🚗", "🚕", "🚙", "🚌", "🏎", "🚓", "🚑", "🚒", "🚐", "🛻", "🚛", "🚜", "🛵", "🚚", "🛸", "🚅", "🚀", "🚤", "🚠", "🛩" ],
+        Theme.animals:  ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐻‍❄️", "🐨", "🐯", "🦁", "🐮", "🐷", "🐵", "🦄" ],
+        Theme.fruits:   ["🍏", "🍎", "🍐", "🍊", "🍋", "🍌", "🍉", "🍇", "🫐", "🥝", "🍒", "🍑" ],
+    ]
+         
+    @State var emojis: [String]
+    
+    init() {
+        //emojis = assignEmojis()
+        emojis = themes[.vehicles]!.shuffled()
+    }
     
     var body: some View {
-        
         VStack(alignment: .leading) {
             
             ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 75, maximum: 100))]) {
-                    ForEach(emojis[0..<emojiCount], id: \.self) { emoji in
+                let minSize = CGFloat((1/Double(emojis.count)) * 1000)
+                let maxSize = CGFloat(minSize * 2)
+
+                let title = "Memorize!"
+                //let title = "\(emojis.count) ->  \(Int(minSize))-\(Int(maxSize))"
+                Text(title).font(.largeTitle).foregroundColor(Color(UIColor.systemBackground)).colorInvert()
+                
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: minSize, maximum: maxSize))]) {
+                    ForEach(emojis[0..<emojis.count], id: \.self) { emoji in
                         CardView(content: emoji)
                             .aspectRatio(2/3, contentMode: .fit)
                     }
@@ -29,41 +58,40 @@ struct ContentView: View {
             Spacer()
             
             HStack {
-                minusButton
+                buttonWithIcon("car", forTheme: .vehicles)
                 Spacer()
-                plusButton
-                
+                buttonWithIcon("hare", forTheme: .animals)
+                Spacer()
+                buttonWithIcon("leaf", forTheme: .fruits)
             }
             .padding(.horizontal)
             .font(.largeTitle)
-            .foregroundColor(.orange)
-            
         }
         .padding(.all)
     }
     
-    
-    
-    
-    var minusButton: some View {
-        Button(action: {
-            if (emojiCount > 1) {
-                emojiCount -= 1
-            }
+    func buttonWithIcon(_ icon: String, forTheme theme: Theme) -> some View {
+        return Button(action: {
+            emojis = assignEmojis(forTheme: theme)
         }, label: {
-            Image(systemName: "minus.circle")
+            VStack {
+                Image(systemName: icon)
+                Text(theme.description).font(.caption)
+            }
         })
     }
-    
-    var plusButton: some View {
-        Button(action: {
-            if (emojiCount < emojis.count) {
-                emojiCount += 1
-            }
-        }, label: {
-            Image(systemName: "plus.circle")
-        })
+
+    func assignEmojis(forTheme theme: Theme = .vehicles) -> [String] {
+        guard let emojis = themes[theme] else { return [] }
+        
+        let shuffeledEmojis = emojis.shuffled()
+        let maxCount = emojis.count
+        let randomCount = Int.random(in: 8...maxCount)
+        let randomEmojis = Array(shuffeledEmojis[0..<randomCount])
+        
+        return randomEmojis
     }
+    
 }
 
 struct CardView: View {
