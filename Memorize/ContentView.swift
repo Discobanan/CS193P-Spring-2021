@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-enum Theme {
-    case vehicles
-    case animals
-    case fruits
+enum Theme: String {
+    case vehicles = "Vehicles2"
+    case animals = "animals2"
+    case fruits = "fruits2"
     
     var description: String {
         switch self {
@@ -31,20 +31,18 @@ struct ContentView: View {
     @State var emojis: [String]
     
     init() {
-        //emojis = assignEmojis()
         emojis = themes[.vehicles]!.shuffled()
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
-            
+        VStack(alignment: .center) {
+            let title = "Memorize!"
+            Text(title).font(.largeTitle)
+            //.foregroundColor(Color(UIColor.systemBackground)).colorInvert()
+           
             ScrollView {
                 let minSize = CGFloat((1/Double(emojis.count)) * 1000)
                 let maxSize = CGFloat(minSize * 2)
-
-                let title = "Memorize!"
-                //let title = "\(emojis.count) ->  \(Int(minSize))-\(Int(maxSize))"
-                Text(title).font(.largeTitle).foregroundColor(Color(UIColor.systemBackground)).colorInvert()
                 
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: minSize, maximum: maxSize))]) {
                     ForEach(emojis[0..<emojis.count], id: \.self) { emoji in
@@ -70,13 +68,17 @@ struct ContentView: View {
         .padding(.all)
     }
     
+    
+}
+
+extension ContentView {
     func buttonWithIcon(_ icon: String, forTheme theme: Theme) -> some View {
         return Button(action: {
             emojis = assignEmojis(forTheme: theme)
         }, label: {
             VStack {
                 Image(systemName: icon)
-                Text(theme.description).font(.caption)
+                Text(theme.rawValue).font(.caption)
             }
         })
     }
@@ -84,14 +86,16 @@ struct ContentView: View {
     func assignEmojis(forTheme theme: Theme = .vehicles) -> [String] {
         guard let emojis = themes[theme] else { return [] }
         
+        //emojis.shuffl
         let shuffeledEmojis = emojis.shuffled()
         let maxCount = emojis.count
-        let randomCount = Int.random(in: 8...maxCount)
+        let randomCount = Int.random(in: 4...maxCount)
         let randomEmojis = Array(shuffeledEmojis[0..<randomCount])
         
         return randomEmojis
+        
     }
-    
+
 }
 
 struct CardView: View {
@@ -120,7 +124,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
             .preferredColorScheme(.dark)
-.previewInterfaceOrientation(.portraitUpsideDown)
         
         ContentView()
             .preferredColorScheme(.light)
