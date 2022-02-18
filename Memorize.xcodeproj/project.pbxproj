@@ -55,10 +55,10 @@
 		FB2D199C27A30A5E00AF0BEF /* Memorize */ = {
 			isa = PBXGroup;
 			children = (
-				FB2D199D27A30A5E00AF0BEF /* MemorizeApp.swift */,
 				FBDB5A4227B586B600B29F43 /* MemoryGame.swift */,
 				FBDB5A4427B588E900B29F43 /* EmojiMemoryGame.swift */,
 				FB2D199F27A30A5E00AF0BEF /* ContentView.swift */,
+				FB2D199D27A30A5E00AF0BEF /* MemorizeApp.swift */,
 				FB2D19A127A30A6000AF0BEF /* Assets.xcassets */,
 				FB2D19A327A30A6000AF0BEF /* Preview Content */,
 			);
