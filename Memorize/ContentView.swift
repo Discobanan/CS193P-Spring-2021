@@ -12,23 +12,32 @@ struct ContentView: View {
 
     var body: some View {
         ScrollView {
+            HStack {
+                Text(viewModel.title) // Task 14
+                Spacer()
+                Text("Score: \(viewModel.currentScore)") // Task 16
+            }
+            
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 65, maximum: 75))]) {
                 ForEach(viewModel.cards) { card in
-                    CardView(card: card)
+                    CardView(card: card, color: viewModel.color)
                         .aspectRatio(2/3, contentMode: .fit)
                         .onTapGesture{
                             viewModel.choose(card)
                         }
                 }
             }
+            
+            Button("New game", action: viewModel.startNewGame) // Task 10
         }
-        .foregroundColor(.red)
+        .foregroundColor(viewModel.color)
         .padding(.all)
     }
 }
 
 struct CardView: View {
     let card: MemoryGame<String>.Card
+    let color: Color
     
     var body: some View {
         ZStack {
@@ -41,7 +50,7 @@ struct CardView: View {
             } else if card.isMatched {
                 shape.opacity(0)
             } else {
-                shape.fill().foregroundColor(.green)
+                shape.fill().foregroundColor(color)
             }
         }
     }

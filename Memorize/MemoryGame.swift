@@ -6,20 +6,28 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct MemoryGame<CardContent> where CardContent: Equatable {
     private(set) var cards: Array<Card>
+    private(set) var color: Color
+    private(set) var title: String
+    private(set) var currentScore: Int // Task 15
     private var indexOfTheOneAndOnlyFaceUpCard: Int?
     
-    init(numberOfPairsOfCards: Int, createCardContent: (Int) -> CardContent) {
-        cards = Array<Card>()
-        
+    init(numberOfPairsOfCards: Int, color: Color, title: String, createCardContent: (Int) -> CardContent) {
+        self.color = color
+        self.cards = Array<Card>()
+        self.title = title
+        self.currentScore = 0
+               
         for pairIndex in 0..<numberOfPairsOfCards {
             let content = createCardContent(pairIndex)
             
-            cards.append(Card(content: content, id: pairIndex*2))
-            cards.append(Card(content: content, id: pairIndex*2+1))
+            self.cards.append(Card(content: content, id: pairIndex*2))
+            self.cards.append(Card(content: content, id: pairIndex*2+1))
         }
+        self.cards.shuffle() // Task 13
     }
     
     mutating func choose(_ card: Card) {
@@ -31,7 +39,12 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
             if cards[choosenIndex].content == cards[potentialMatchIndex].content {
                 cards[choosenIndex].isMatched = true
                 cards[potentialMatchIndex].isMatched = true
+                currentScore += 2
+            } else {
+                currentScore -= 1
             }
+                
+            
             indexOfTheOneAndOnlyFaceUpCard = nil
         } else {
             for index in cards.indices {
@@ -45,7 +58,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     }
     
     struct Card: Identifiable {
-        var isFaceUp = false
+        var isFaceUp = false // Task 12
         var isMatched = false
         var content: CardContent
         var id: Int
