@@ -62,5 +62,6 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         var isMatched = false
         var content: CardContent
         var id: Int
+        //var seen = false
     }
 }

@@ -12,10 +12,13 @@ struct ContentView: View {
 
     var body: some View {
         ScrollView {
-            HStack {
-                Text(viewModel.title) // Task 14
-                Spacer()
-                Text("Score: \(viewModel.currentScore)") // Task 16
+            ZStack {
+                Text(viewModel.title)
+                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)// Task 14
+                HStack {
+                    Spacer()
+                    Text("Score: \(viewModel.currentScore)")// Task 16
+                }
             }
             
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 65, maximum: 75))]) {
@@ -30,7 +33,7 @@ struct ContentView: View {
             
             Button("New game", action: viewModel.startNewGame) // Task 10
         }
-        .foregroundColor(viewModel.color)
+        //.foregroundColor(viewModel.color)
         .padding(.all)
     }
 }
@@ -45,7 +48,7 @@ struct CardView: View {
             
             if card.isFaceUp {
                 shape.fill().foregroundColor(.white)
-                shape.strokeBorder(lineWidth: 3)
+                shape.strokeBorder(lineWidth: 3).foregroundColor(color)
                 Text(card.content).font(.largeTitle)
             } else if card.isMatched {
                 shape.opacity(0)
