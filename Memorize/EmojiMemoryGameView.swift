@@ -11,31 +11,25 @@ struct EmojiMemoryGameView: View {
     @ObservedObject var game: EmojiMemoryGame
 
     var body: some View {
-        ScrollView {
-            ZStack {
-                Text(game.title)
-                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                HStack {
-                    Spacer()
-                    Text("Score: \(game.currentScore)")
+        AspectVGrid(items: game.cards, aspectRatio: 2/3, content: { card in
+            cardView(for: card)
+        })
+        .foregroundColor(.red)
+        .padding(.horizontal)
+    }
+    
+    @ViewBuilder
+    private func cardView(for card: EmojiMemoryGame.Card) -> some View {
+        if card.isMatched && !card.isFaceUp {
+            Rectangle()
+                .opacity(0)
+        } else {
+            CardView(card: card, color: game.color)
+                .padding(4)
+                .onTapGesture{
+                    game.choose(card)
                 }
-            }
-            
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 75))]) {
-                ForEach(game.cards) { card in
-                    
-                    CardView(card: card, color: game.color)
-                        .aspectRatio(2/3, contentMode: .fit)
-                        .onTapGesture{
-                            game.choose(card)
-                        }
-                }
-            }
-            
-            Button("New game", action: game.startNewGame)
         }
-        //.foregroundColor(viewModel.color)
-        .padding(.all)
     }
 }
 
@@ -51,6 +45,11 @@ struct CardView: View {
                 if card.isFaceUp {
                     shape.fill().foregroundColor(.white)
                     shape.strokeBorder(lineWidth: DrawingConstants.lineWidth).foregroundColor(color)
+                    
+                    Pie(startAngle: Angle(degrees: -90), endAngle: Angle(degrees: 130-90))
+                        .padding(DrawingConstants.timerPiePadding)
+                        .opacity(DrawingConstants.timerPieOpacity)
+                        
                     Text(card.content).font(font(in: geometry.size))
                 } else if card.isMatched {
                     shape.opacity(0)
@@ -68,17 +67,20 @@ struct CardView: View {
     private struct DrawingConstants {
         static let cornerRadius: CGFloat = 20
         static let lineWidth: CGFloat = 3
-        static let fontScale: CGFloat = 0.75
+        static let fontScale: CGFloat = 0.7
+        static let timerPiePadding: CGFloat = 5
+        static let timerPieOpacity: CGFloat = 0.7
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let game = EmojiMemoryGame()
-        EmojiMemoryGameView(game: game)
+        game.choose(game.cards.first!)
+        return EmojiMemoryGameView(game: game)
             .preferredColorScheme(.dark)
         
-        EmojiMemoryGameView(game: game)
-            .preferredColorScheme(.light)
+//        EmojiMemoryGameView(game: game)
+//            .preferredColorScheme(.light)
     }
 }
