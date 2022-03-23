@@ -25,7 +25,7 @@ class EmojiMemoryGame: ObservableObject {
         ThemeData(name: "Office", cards: 100, color: .yellow, emojis: [ "📨", "📊", "📈", "📎", "📐", "✂️", "🖋", "🖊", "📌", "📔", "📚", "🗄" ] )
     ]
     
-    @Published private(set) var model = createMemoryGame(withThemeName: "Fruits")
+    @Published private(set) var model = createMemoryGame(withThemeName: themes.randomElement()?.name ?? "Vehicles")
    
     static func createMemoryGame(withThemeName themeName: String) -> MemoryGame<String> {
         var theme = self.themes.first { $0.name == themeName }! // Crash if theme doesn't exist, shouldn't happens, so probably fine...
@@ -60,6 +60,14 @@ class EmojiMemoryGame: ObservableObject {
         model.choose(card)
     }
 
+    func shuffle() {
+        model.shuffle()
+    }
+    
+    func restart() {
+        model = EmojiMemoryGame.createMemoryGame(withThemeName: EmojiMemoryGame.themes.randomElement()?.name ?? "Vehicles")
+    }
+    
     func startNewGame() {
         guard let randomTheme = EmojiMemoryGame.themes.randomElement() else { return }
         model = EmojiMemoryGame.createMemoryGame(withThemeName: randomTheme.name)
