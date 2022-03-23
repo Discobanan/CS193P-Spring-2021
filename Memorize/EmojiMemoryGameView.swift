@@ -40,24 +40,22 @@ struct CardView: View {
     var body: some View {
         GeometryReader(content: { geometry in
             ZStack {
-                let shape = RoundedRectangle(cornerRadius: DrawingConstants.cornerRadius)
-                
-                if card.isFaceUp {
-                    shape.fill().foregroundColor(.white)
-                    shape.strokeBorder(lineWidth: DrawingConstants.lineWidth).foregroundColor(color)
-                    
-                    Pie(startAngle: Angle(degrees: -90), endAngle: Angle(degrees: 130-90))
-                        .padding(DrawingConstants.timerPiePadding)
-                        .opacity(DrawingConstants.timerPieOpacity)
+                Pie(startAngle: Angle(degrees: -90), endAngle: Angle(degrees: 130-90))
+                    .padding(DrawingConstants.timerPiePadding)
+                    .opacity(DrawingConstants.timerPieOpacity)
                         
-                    Text(card.content).font(font(in: geometry.size))
-                } else if card.isMatched {
-                    shape.opacity(0)
-                } else {
-                    shape.fill().foregroundColor(color)
-                }
+                Text(card.content)
+                    .rotationEffect(Angle.degrees(card.isMatched ? 360 : 0))
+                    .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))
+                    .font(Font.system(size: DrawingConstants.fontSize))
+                    .scaleEffect(scale(thatFits: geometry.size))
             }
+            .modifier(Cardify(isFaceUp: card.isFaceUp))
         })
+    }
+    
+    private func scale(thatFits size: CGSize) -> CGFloat {
+        min(size.width, size.height) / (DrawingConstants.fontSize / DrawingConstants.fontScale)
     }
     
     private func font(in size: CGSize) -> Font {
@@ -68,6 +66,7 @@ struct CardView: View {
         static let cornerRadius: CGFloat = 20
         static let lineWidth: CGFloat = 3
         static let fontScale: CGFloat = 0.7
+        static let fontSize: CGFloat = 32
         static let timerPiePadding: CGFloat = 5
         static let timerPieOpacity: CGFloat = 0.7
     }

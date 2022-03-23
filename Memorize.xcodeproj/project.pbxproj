@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB28F60227EB968200923D92 /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB28F60127EB968200923D92 /* Cardify.swift */; };
 		FB2D199E27A30A5E00AF0BEF /* MemorizeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2D199D27A30A5E00AF0BEF /* MemorizeApp.swift */; };
 		FB2D19A027A30A5E00AF0BEF /* EmojiMemoryGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2D199F27A30A5E00AF0BEF /* EmojiMemoryGameView.swift */; };
 		FB2D19A227A30A6000AF0BEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB2D19A127A30A6000AF0BEF /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FB28F60127EB968200923D92 /* Cardify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
 		FB2D199A27A30A5E00AF0BEF /* Memorize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memorize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB2D199D27A30A5E00AF0BEF /* MemorizeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemorizeApp.swift; sourceTree = "<group>"; };
 		FB2D199F27A30A5E00AF0BEF /* EmojiMemoryGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMemoryGameView.swift; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 				FB2D199D27A30A5E00AF0BEF /* MemorizeApp.swift */,
 				FB2D19A127A30A6000AF0BEF /* Assets.xcassets */,
 				FB2D19A327A30A6000AF0BEF /* Preview Content */,
+				FB28F60127EB968200923D92 /* Cardify.swift */,
 			);
 			path = Memorize;
 			sourceTree = "<group>";
@@ -150,6 +153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB7DD69A27DA6A1C00617559 /* Pie.swift in Sources */,
+				FB28F60227EB968200923D92 /* Cardify.swift in Sources */,
 				FBDB5A4327B586B600B29F43 /* MemoryGame.swift in Sources */,
 				FB2D19A027A30A5E00AF0BEF /* EmojiMemoryGameView.swift in Sources */,
 				FB2D199E27A30A5E00AF0BEF /* MemorizeApp.swift in Sources */,
