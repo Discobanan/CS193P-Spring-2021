@@ -15,6 +15,7 @@
 		FB75A3DF27ECE276004FD83A /* EmojiArtDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB75A3DE27ECE276004FD83A /* EmojiArtDocument.swift */; };
 		FB75A3E227ECE38C004FD83A /* UtilityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB75A3E127ECE38C004FD83A /* UtilityExtensions.swift */; };
 		FB75A3E527ECE3E4004FD83A /* EmojiArtDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB75A3E427ECE3E4004FD83A /* EmojiArtDocumentView.swift */; };
+		FB75A3E727F5FFE8004FD83A /* UtilityViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB75A3E627F5FFE8004FD83A /* UtilityViews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		FB75A3DE27ECE276004FD83A /* EmojiArtDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiArtDocument.swift; sourceTree = "<group>"; };
 		FB75A3E127ECE38C004FD83A /* UtilityExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityExtensions.swift; sourceTree = "<group>"; };
 		FB75A3E427ECE3E4004FD83A /* EmojiArtDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiArtDocumentView.swift; sourceTree = "<group>"; };
+		FB75A3E627F5FFE8004FD83A /* UtilityViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityViews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				FB75A3CF27ECDA9F004FD83A /* Assets.xcassets */,
 				FB75A3D127ECDA9F004FD83A /* Preview Content */,
 				FB75A3E127ECE38C004FD83A /* UtilityExtensions.swift */,
+				FB75A3E627F5FFE8004FD83A /* UtilityViews.swift */,
 			);
 			path = EmojiArt;
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB75A3E727F5FFE8004FD83A /* UtilityViews.swift in Sources */,
 				FB75A3CC27ECDA9D004FD83A /* EmojiArtApp.swift in Sources */,
 				FB75A3E227ECE38C004FD83A /* UtilityExtensions.swift in Sources */,
 				FB75A3DF27ECE276004FD83A /* EmojiArtDocument.swift in Sources */,
