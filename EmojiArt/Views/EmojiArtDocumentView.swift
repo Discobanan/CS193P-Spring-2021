@@ -10,12 +10,14 @@ import SwiftUI
 struct EmojiArtDocumentView: View {
     @ObservedObject var document: EmojiArtDocument
     
+    @State private var alertToShow: IdentifiableAlert?
+    
     let defaultEmojiFontSize: CGFloat = 40
     
     var body: some View {
         VStack(spacing: 0) {
             documentBody
-            palette
+            PaletteChooser(emojiFontSize: defaultEmojiFontSize)
         }
     }
     
@@ -45,9 +47,32 @@ struct EmojiArtDocumentView: View {
                 return drop(providers: providers, at: location, in: geometry)
             }
             .gesture(panGesture().simultaneously(with: zoomGesture()))
+            .alert(item: $alertToShow) { alertToShow in
+                alertToShow.alert()
+            }
+            .onChange(of: document.backgroundImageFetchStatus) { status in
+                switch(status)
+                {
+                case .failed(let url):
+                    showBackgroundImageFailedAlert(url)
+                default:
+                    break
+                }
+                
+            }
 
         }
         
+    }
+    
+    private func showBackgroundImageFailedAlert(_ url: URL) {
+        alertToShow = IdentifiableAlert(id: "fetch failed \(url)", alert: {
+            Alert(
+                title: Text("Background image fetch"),
+                message: Text("Couldn't load image from \(url)"),
+                dismissButton: .default(Text("OK"))
+            )
+        })
     }
     
     private func doubleTapToZoom(in size: CGSize) -> some Gesture {
@@ -159,28 +184,6 @@ struct EmojiArtDocumentView: View {
                 
     }
     
-    var palette: some View {
-        ScrollingEmoijisView(emojis: testEmojis)
-            .font(.system(size: defaultEmojiFontSize))
-    }
-    
-    let testEmojis = "😀😷🦠💉👻👀🐶🌲🌎🌞🔥🍎⚽️🚗🚓🚲🛩🚁🚀🛸🏠⌚️🎁🗝🔐❤️⛔️❌❓✅⚠️🎶➕➖🏳️"
-}
-
-struct ScrollingEmoijisView: View {
-    let emojis: String
-
-    var body: some View {
-        ScrollView(.horizontal) {
-            HStack {
-                ForEach(emojis.map { String($0) }, id: \.self) { emoji in
-                    Text(emoji).onDrag {
-                        NSItemProvider(object: emoji as NSString)
-                    }
-                }
-            }
-        }
-    }
 }
 
 struct EmojiArtDocumentView_Previews: PreviewProvider {

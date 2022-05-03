@@ -77,9 +77,10 @@ class EmojiArtDocument: ObservableObject {
     @Published var backgroundImage: UIImage?
     @Published var backgroundImageFetchStatus: BackgroundImageFetchStatus?
     
-    enum BackgroundImageFetchStatus {
+    enum BackgroundImageFetchStatus : Equatable {
         case idle
         case fetching
+        case failed(URL)
     }
 
     // MARK: - Private funcs
@@ -97,8 +98,13 @@ class EmojiArtDocument: ObservableObject {
                             self?.backgroundImageFetchStatus = .idle
                             self?.backgroundImage = UIImage(data: imageData)
                         }
+                        
+                        if self?.backgroundImage == nil {
+                            self?.backgroundImageFetchStatus = .failed(url)
+                        }
                     }
                 }
+                
             }
         case .imageData(let data):
             backgroundImage = UIImage(data: data)
