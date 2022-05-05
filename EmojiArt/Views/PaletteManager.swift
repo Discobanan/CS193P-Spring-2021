@@ -33,7 +33,7 @@ struct PaletteManager: View {
                     store.palettes.move(fromOffsets: indexSet, toOffset: newOffset)
                 }
             }
-            .listStyle(.plain)
+            //.listStyle(.plain)
             .navigationTitle("Manage palettes")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

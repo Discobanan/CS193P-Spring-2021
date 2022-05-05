@@ -20,6 +20,7 @@
 		FB90D2C9282183210034FF8A /* PaletteChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB90D2C8282183210034FF8A /* PaletteChooser.swift */; };
 		FB90D2CB2821893A0034FF8A /* PaletteEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB90D2CA2821893A0034FF8A /* PaletteEditor.swift */; };
 		FB90D2CD282191DE0034FF8A /* PaletteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB90D2CC282191DE0034FF8A /* PaletteManager.swift */; };
+		FBD28B332824304100E197D5 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBD28B322824304100E197D5 /* CloudKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		FB90D2C8282183210034FF8A /* PaletteChooser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteChooser.swift; sourceTree = "<group>"; };
 		FB90D2CA2821893A0034FF8A /* PaletteEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteEditor.swift; sourceTree = "<group>"; };
 		FB90D2CC282191DE0034FF8A /* PaletteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteManager.swift; sourceTree = "<group>"; };
+		FBD28B322824304100E197D5 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBD28B332824304100E197D5 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,6 +58,7 @@
 			children = (
 				FB75A3CA27ECDA9D004FD83A /* EmojiArt */,
 				FB75A3C927ECDA9D004FD83A /* Products */,
+				FBD28B312824304100E197D5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -116,6 +120,14 @@
 				FB90D2CC282191DE0034FF8A /* PaletteManager.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		FBD28B312824304100E197D5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FBD28B322824304100E197D5 /* CloudKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -353,10 +365,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = EmojiArt/EmojiArtRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"EmojiArt/Preview Content\"";
-				DEVELOPMENT_TEAM = ZR5EVLDQZW;
+				DEVELOPMENT_TEAM = YYU8TANNM6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
