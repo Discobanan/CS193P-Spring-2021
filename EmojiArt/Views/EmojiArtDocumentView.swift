@@ -9,10 +9,12 @@ import SwiftUI
 
 struct EmojiArtDocumentView: View {
     @ObservedObject var document: EmojiArtDocument
+    @Environment(\.undoManager) var undoManager
     
     @State private var alertToShow: IdentifiableAlert?
     
-    let defaultEmojiFontSize: CGFloat = 40
+    @ScaledMetric
+    var defaultEmojiFontSize: CGFloat = 40
     
     var body: some View {
         VStack(spacing: 0) {
@@ -60,12 +62,22 @@ struct EmojiArtDocumentView: View {
                 }
             }
             .onReceive(document.$backgroundImage, perform: { image in
-                zoomTofit(image, in: geometry.size)
+                if autozoom {
+                    zoomTofit(image, in: geometry.size)
+                }
             })
+            .toolbar {
+                UndoButton(
+                    undo: undoManager?.optionalUndoMenuItemTitle,
+                    redo: undoManager?.optionalRedoMenuItemTitle
+                )
+            }
 
         }
         
     }
+    
+    @State private var autozoom = false // TODO: Set to true somwhere
     
     private func showBackgroundImageFailedAlert(_ url: URL) {
         alertToShow = IdentifiableAlert(id: "fetch failed \(url)", alert: {
@@ -89,7 +101,7 @@ struct EmojiArtDocumentView: View {
     private func drop(providers: [NSItemProvider], at location: CGPoint, in geometry: GeometryProxy) -> Bool {
         var found = providers.loadObjects(ofType: URL.self) { url in
             print("found URL")
-            document.setBackground(EmojiArtModel.Background.url(url.imageURL))
+            document.setBackground(EmojiArtModel.Background.url(url.imageURL), undoManager: undoManager)
         }
         
         if !found {
@@ -97,7 +109,7 @@ struct EmojiArtDocumentView: View {
             found = providers.loadObjects(ofType: UIImage.self) { image in
                 print("found image")
                 if let data = image.jpegData(compressionQuality: 1) {
-                    document.setBackground(.imageData(data))
+                    document.setBackground(.imageData(data), undoManager: undoManager)
                 }
             }
             
@@ -109,7 +121,8 @@ struct EmojiArtDocumentView: View {
                     document.addEmoji(
                         String(emoji),
                         at: convertToEmojiCoordinates(location, in: geometry),
-                        size: defaultEmojiFontSize / zoomScale
+                        size: defaultEmojiFontSize / zoomScale,
+                        undoManager: undoManager
                     )
                 }
             }
@@ -143,8 +156,12 @@ struct EmojiArtDocumentView: View {
         return (Int(location.x), Int(location.y))
     }
 
-    @State var steadyStatePanOffset: CGSize = .zero
-    @GestureState var gesturePanOffset: CGSize = .zero
+    @SceneStorage("steadyStatePanOffset")
+    var steadyStatePanOffset: CGSize = .zero
+    
+    @GestureState
+    var gesturePanOffset: CGSize = .zero
+    
     private var panOffset: CGSize {
         (steadyStatePanOffset + gesturePanOffset) * zoomScale
     }
@@ -159,7 +176,7 @@ struct EmojiArtDocumentView: View {
             }
     }
     
-    @State var steadyStateZoomScale: CGFloat = 1
+    @SceneStorage("steadyStateZoomScale") var steadyStateZoomScale: CGFloat = 1
     @GestureState var gestureZoomScale: CGFloat = 1
     private var zoomScale: CGFloat {
         steadyStateZoomScale * gestureZoomScale
