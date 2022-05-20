@@ -26,7 +26,7 @@ struct EmojiArtDocumentView: View {
     var documentBody: some View {
         GeometryReader { geometry in
             ZStack {
-                Color.white.overlay(
+                Color.white.overlay( // TODO: Här gjorde han grejjer jag inte hann med :)
                     OptionalImage(uiImage: document.backgroundImage)
                         .scaleEffect(zoomScale)
                         .position(convertFromEmojiCoordinates((0,0), in: geometry))
@@ -66,16 +66,79 @@ struct EmojiArtDocumentView: View {
                     zoomTofit(image, in: geometry.size)
                 }
             })
-            .toolbar {
-                UndoButton(
-                    undo: undoManager?.optionalUndoMenuItemTitle,
-                    redo: undoManager?.optionalRedoMenuItemTitle
-                )
+            .compactableToolbar {
+//                if PhotoLibrary.isAvailable {
+//                    AnimatedActionButton(title: "Search photos", systemImage: "photo") {
+//                        backgroundPicker = .camera
+//                    }
+//                }
+                if Camera.isAvailable {
+                    AnimatedActionButton(title: "Take photo", systemImage: "camera") {
+                        backgroundPicker = .camera
+                    }
+                }
+                AnimatedActionButton(title: "Paste background", systemImage: "doc.on.clipboard") {
+                    pasteBackground()
+                }
+                if let undoManager = undoManager {
+                    if undoManager.canUndo {
+                        AnimatedActionButton(title: undoManager.undoActionName, systemImage: "arrow.uturn.backward") {
+                            undoManager.undo()
+                        }
+                    }
+                    if undoManager.canRedo {
+                        AnimatedActionButton(title: undoManager.redoActionName, systemImage: "arrow.uturn.forward") {
+                            undoManager.redo()
+                        }
+                    }
+                }
+                        
+                
             }
-
+            .sheet(item: $backgroundPicker) { pickerType in
+                switch pickerType
+                {
+                case .camera: Camera(handlePickedImage: { image in handlePickedBackgroundImage(image) })
+                case .library: EmptyView()
+                //case .library: PhotoLibrary(handlePickedImage: { image in handlePickedBackgroundImage(image) })
+                }
+            }
         }
-        
     }
+    
+    private func handlePickedBackgroundImage(_ image: UIImage?) {
+        autozoom = true
+        if let imageData = image?.jpegData(compressionQuality: 1.0) {
+            document.setBackground(.imageData(imageData), undoManager: undoManager)
+        }
+        backgroundPicker = nil
+    }
+    
+    @State private var backgroundPicker: BackgroundPickerType?
+    
+    enum BackgroundPickerType: Identifiable {
+        case camera
+        case library
+        var id: BackgroundPickerType { self }
+    }
+    
+    private func pasteBackground() {
+        autozoom = true
+        if let imageData = UIPasteboard.general.image?.jpegData(compressionQuality: 1.0) {
+            document.setBackground(.imageData(imageData), undoManager: undoManager)
+        } else if let url = UIPasteboard.general.url?.imageURL {
+            document.setBackground(.url(url), undoManager: undoManager)
+        } else {
+            alertToShow = IdentifiableAlert(id: "error", alert: {
+                Alert(
+                    title: Text("Paste background"),
+                    message: Text("There is no image or URL in the clipboard"),
+                    dismissButton: .default(Text("OK"))
+                )
+            })
+        }
+    }
+    
     
     @State private var autozoom = false // TODO: Set to true somwhere
     

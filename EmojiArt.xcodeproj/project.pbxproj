@@ -21,6 +21,7 @@
 		FB90D2CB2821893A0034FF8A /* PaletteEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB90D2CA2821893A0034FF8A /* PaletteEditor.swift */; };
 		FB90D2CD282191DE0034FF8A /* PaletteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB90D2CC282191DE0034FF8A /* PaletteManager.swift */; };
 		FBD28B332824304100E197D5 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBD28B322824304100E197D5 /* CloudKit.framework */; };
+		FBD28B3628369FEB00E197D5 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD28B3528369FEB00E197D5 /* Camera.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		FB90D2CC282191DE0034FF8A /* PaletteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteManager.swift; sourceTree = "<group>"; };
 		FBD28B322824304100E197D5 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		FBD28B34282D629400E197D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		FBD28B3528369FEB00E197D5 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				FB75A3E427ECE3E4004FD83A /* EmojiArtDocumentView.swift */,
+				FBD28B3528369FEB00E197D5 /* Camera.swift */,
 				FB90D2C8282183210034FF8A /* PaletteChooser.swift */,
 				FB90D2CA2821893A0034FF8A /* PaletteEditor.swift */,
 				FB90D2CC282191DE0034FF8A /* PaletteManager.swift */,
@@ -210,6 +213,7 @@
 				FB75A3E227ECE38C004FD83A /* UtilityExtensions.swift in Sources */,
 				FB75A3DF27ECE276004FD83A /* EmojiArtDocument.swift in Sources */,
 				FB75A3E527ECE3E4004FD83A /* EmojiArtDocumentView.swift in Sources */,
+				FBD28B3628369FEB00E197D5 /* Camera.swift in Sources */,
 				FB75A3DA27ECDFAD004FD83A /* EmojiArtModel.swift in Sources */,
 				FB75A3DD27ECE1A5004FD83A /* EmojiArtModel.Background.swift in Sources */,
 				FB90D2C9282183210034FF8A /* PaletteChooser.swift in Sources */,
@@ -345,6 +349,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EmojiArt/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Ge mig access FFS!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -377,6 +382,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = EmojiArt/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Ge mig access FFS!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
